@@ -1,6 +1,6 @@
 {
   "name": "github-repositories-explorer",
-  "homepage": "https://brijesh-pant.github.io/github-repositories-explorer",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
