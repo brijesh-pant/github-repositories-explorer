@@ -1,3 +1,9 @@
+# GitHub Repositories Explorer
+
+[![codecov](https://codecov.io/gh/brijesh-pant/github-repositories-explorer/branch/main/graph/badge.svg?token=HSWHTETH4U)](https://codecov.io/gh/brijesh-pant/github-repositories-explorer)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3f4229b4-75a9-482f-a675-7858873d3a01/deploy-status)](https://app.netlify.com/sites/capable-crostata-90a9f7/deploys)
+[![pages-build-deployment](https://github.com/brijesh-pant/github-repositories-explorer/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/brijesh-pant/github-repositories-explorer/actions/workflows/pages/pages-build-deployment)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
