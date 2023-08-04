@@ -69,6 +69,10 @@
     "webpack": "^5.88.2"
   },
   "jest": {
+    "collectCoverageFrom": [
+      "!src/**/styles.js",
+      "!src/**/*.stories.js"
+    ],
     "moduleNameMapper": {
       "~/(.*)": "<rootDir>/src/$1"
     }

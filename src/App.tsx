@@ -1,8 +1,7 @@
-import Button from "@mui/material/Button";
-
 import ThemeProvider from "~/theme";
+import Header from "~/ui/Header";
 
-const Main = () => <Button variant="contained">Simple Button</Button>;
+const Main = () => <Header />;
 
 function App() {
   return (
