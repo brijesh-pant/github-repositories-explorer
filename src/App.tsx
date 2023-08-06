@@ -1,12 +1,13 @@
 import ThemeProvider from "~/theme";
-import Header from "~/ui/Header";
-
-const Main = () => <Header />;
+import MainLayout from "~/layouts/main";
+import LandingPage from "~/pages/LandingPage";
 
 function App() {
   return (
     <ThemeProvider>
-      <Main />
+      <MainLayout>
+        <LandingPage />
+      </MainLayout>
     </ThemeProvider>
   );
 }

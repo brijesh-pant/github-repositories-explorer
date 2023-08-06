@@ -1,22 +1,8 @@
 import List from "@mui/material/List";
 
-import RepoListItem from ".";
+import RepoListItem from "~/components/RepoListItem";
 
 import avatar1 from "~/assets/images/avatar/1.png";
-
-// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta = {
-  title: "Components/RepoListItem",
-  component: RepoListItem,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "centered",
-  },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
-  tags: ["autodocs"],
-};
-
-export default meta;
 
 const mockRepos = [
   {
@@ -65,43 +51,45 @@ const mockRepos = [
   },
 ];
 
-// More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Basic = {
-  render: () => (
-    <RepoListItem
-      avatarSrc={avatar1}
-      fullName="gaearon/boilerplate-webpack-react"
-      description="Boilerplate project for Reactjs with webpack, gulp and stylus"
-      htmlUrl="https://github.com/gaearon/boilerplate-webpack-react"
-      name="boilerplate-webpack-react"
-      stargazersCount={1000}
-    />
-  ),
+const RepoList = () => {
+  return (
+    <List
+      sx={{
+        height: "80vh",
+        width: "100%",
+        minWidth: 360,
+        bgcolor: "custom.200",
+        borderRadius: "6px",
+        overflow: "scroll",
+      }}
+    >
+      {mockRepos
+        .concat(mockRepos)
+        .map(
+          (
+            {
+              avatarSrc,
+              name,
+              fullName,
+              description,
+              htmlUrl,
+              stargazersCount,
+            },
+            index
+          ) => (
+            <RepoListItem
+              key={index}
+              avatarSrc={avatarSrc}
+              description={description}
+              fullName={fullName}
+              htmlUrl={htmlUrl}
+              name={name}
+              stargazersCount={stargazersCount}
+            />
+          )
+        )}
+    </List>
+  );
 };
 
-const RepoList = () => (
-  <List sx={{ width: "100%", minWidth: 360, bgcolor: "background.paper" }}>
-    {mockRepos.map(
-      ({
-        avatarSrc,
-        name,
-        fullName,
-        description,
-        htmlUrl,
-        stargazersCount,
-      }) => (
-        <RepoListItem
-          avatarSrc={avatarSrc}
-          description={description}
-          fullName={fullName}
-          htmlUrl={htmlUrl}
-          name={name}
-          stargazersCount={stargazersCount}
-        />
-      )
-    )}
-  </List>
-);
-export const All = {
-  render: () => <RepoList />,
-};
+export default RepoList;
