@@ -38,7 +38,7 @@ export default function RepoListItem({
   stargazersCount,
 }) {
   return (
-    <Card data-testid="repo-list-item" sx={{ m: 2 }}>
+    <Card component="li" data-testid="repo-list-item" sx={{ m: 2 }}>
       <CardHeader
         avatar={<Avatar alt={name} src={avatarSrc} />}
         action={<Stargazers count={stargazersCount} />}

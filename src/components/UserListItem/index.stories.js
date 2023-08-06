@@ -11,7 +11,7 @@ import avatar5 from "~/assets/images/avatar/5.png";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
-  title: "UserListItem",
+  title: "Components/UserListItem",
   component: UserListItem,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout

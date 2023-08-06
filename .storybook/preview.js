@@ -1,5 +1,5 @@
 import React from "react";
-
+import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import ThemeProvider from "~/theme";
 
 const preview = {
@@ -10,6 +10,11 @@ const preview = {
       </ThemeProvider>
     ),
   ],
+  parameters: {
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+    },
+  },
 };
 
 export default preview;
