@@ -1,53 +1,63 @@
-import React from "react";
+import PropTypes from "prop-types";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import List from "@mui/material/List";
+import { styled } from "@mui/material/styles";
 
 import UserListItem from "~/components/UserListItem";
+import UserListSkeleton from "~/ui/Skeleton/UserListSkeleton";
+import { fetchRepos } from "~/features/repos/repoSlice";
 
-import avatar1 from "~/assets/images/avatar/1.png";
-import avatar2 from "~/assets/images/avatar/2.png";
-import avatar3 from "~/assets/images/avatar/3.png";
-import avatar4 from "~/assets/images/avatar/4.png";
-import avatar5 from "~/assets/images/avatar/5.png";
+const StyledList = styled(List)(({ theme }) => ({
+  height: "100%",
+  width: "100%",
+  minWidth: theme.spacing(45),
+  backgroundColor: theme.palette.custom[200],
+  borderRadius: "6px",
+  paddingTop: 0,
+  paddingBottom: 0,
+}));
 
-const mockUsers = [
-  {
-    name: "tom",
-    avatarSrc: avatar1,
-  },
-  {
-    name: "mojombo",
-    avatarSrc: avatar2,
-  },
-  {
-    name: "tmcw",
-    avatarSrc: avatar3,
-  },
-  {
-    name: "h2non",
-    avatarSrc: avatar4,
-  },
-  {
-    name: "tomnomnom",
-    avatarSrc: avatar5,
-  },
-];
+const UserList = ({ repos, users }) => {
+  const dispatch = useDispatch();
+  const { isFetching, users: userList } = users;
+  const { selectedUserId } = repos;
 
-const UserList = () => {
-  return (
-    <List
-      sx={{
-        height: "100%",
-        width: "100%",
-        minWidth: 360,
-        bgcolor: "custom.200",
-        borderRadius: "6px",
-      }}
-    >
-      {mockUsers.map(({ avatarSrc, name }) => (
-        <UserListItem key={name} avatarSrc={avatarSrc} name={name} />
-      ))}
-    </List>
+  const handleClick = useCallback(
+    (userId) => {
+      dispatch(fetchRepos(userId));
+    },
+    [dispatch]
   );
+
+  if (isFetching) {
+    return <UserListSkeleton />;
+  }
+
+  return (
+    <StyledList data-testid="user-list">
+      {userList.map(({ avatar_url: avatarSrc, login: name }) => (
+        <UserListItem
+          key={name}
+          avatarSrc={avatarSrc}
+          name={name}
+          selectedUserId={selectedUserId}
+          onClick={handleClick}
+        />
+      ))}
+    </StyledList>
+  );
+};
+
+UserList.propTypes = {
+  repos: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    repos: PropTypes.object,
+  }),
+  users: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    users: PropTypes.array,
+  }),
 };
 
 export default UserList;

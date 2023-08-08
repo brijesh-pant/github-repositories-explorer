@@ -1,5 +1,5 @@
 import Header from ".";
-import logo from "~/assets/images/avatar/logo.png";
+import logo from "~/assets/images/logo.png";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {

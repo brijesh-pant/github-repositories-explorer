@@ -23,6 +23,10 @@ const config = {
         ...config.resolve.alias,
         "~": path.resolve(__dirname, "../src"),
       };
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        querystring: require.resolve("querystring-es3"),
+      };
     }
     return config;
   },

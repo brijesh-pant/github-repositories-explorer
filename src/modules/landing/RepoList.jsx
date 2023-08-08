@@ -1,84 +1,73 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import _ from "lodash";
+import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
 import List from "@mui/material/List";
+import { styled } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import RepoListItem from "~/components/RepoListItem";
+import LoadingIndicator from "~/ui/LoadingIndicator";
+import RepoListSkeleton from "~/ui/Skeleton/RepoListSkeleton";
 
-import avatar1 from "~/assets/images/avatar/1.png";
+import { fetchRepos, fetchMoreRepos } from "~/features/repos/repoSlice";
 
-const mockRepos = [
-  {
-    avatarSrc: avatar1,
-    name: "babel-handbook",
-    fullName: "gaearon/babel-handbook",
-    description:
-      ":blue_book: A guided handbook on how to use Babel and how to create plugins for Babel.",
-    htmlUrl: "https://github.com/gaearon/babel-handbook",
-    stargazersCount: 15,
+const StyledList = styled(List)(({ theme }) => ({
+  height: "80vh",
+  width: "100%",
+  minWidth: theme.spacing(45),
+  backgroundColor: theme.palette.custom[200],
+  borderRadius: "6px",
+  overflow: "scroll",
+  [theme.breakpoints.down("md")]: {
+    height: "100%",
   },
-  {
-    avatarSrc: avatar1,
-    name: "babel-plugin-flow-comments",
-    fullName: "gaearon/babel-plugin-flow-comments",
-    description: "Turn flow type annotations into comments.",
-    htmlUrl: "https://github.com/gaearon/babel-plugin-flow-comments",
-    stargazersCount: 1,
-  },
-  {
-    avatarSrc: avatar1,
-    name: "babel-plugin-functional-hmr",
-    fullName: "gaearon/babel-plugin-functional-hmr",
-    description:
-      "Babel plugin enables HMR for functional components in React Native.",
-    htmlUrl: "https://github.com/gaearon/babel-plugin-functional-hmr",
-    stargazersCount: 7,
-  },
-  {
-    avatarSrc: avatar1,
-    name: "babel-plugin-react-transform",
-    fullName: "gaearon/babel-plugin-react-transform",
-    description:
-      "Babel plugin to instrument React components with custom transforms",
-    htmlUrl: "https://github.com/gaearon/babel-plugin-react-transform",
-    stargazersCount: 1091,
-  },
-  {
-    avatarSrc: avatar1,
-    name: "boilerplate-webpack-react",
-    fullName: "gaearon/boilerplate-webpack-react",
-    description:
-      "Boilerplate project for Reactjs with webpack, gulp and stylus",
-    htmlUrl: "https://github.com/gaearon/boilerplate-webpack-react",
-    stargazersCount: 3,
-  },
-];
+}));
 
-const RepoList = () => {
+const RepoList = ({ repos, users }) => {
+  const dispatch = useDispatch();
+  const { users: userList } = users;
+  const { isFetching, selectedUserId, repos: repoMap } = repos;
+  const repoList = _.get(repoMap, `[${selectedUserId}].items`, []);
+  const lastPage = _.get(repoMap, `[${selectedUserId}].lastPage`, 0);
+  const nextPage = _.get(repoMap, `[${selectedUserId}].nextPage`, 0);
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    if (!_.isEmpty(userList) && isDesktop) {
+      dispatch(fetchRepos(userList[0].login));
+    }
+  }, [dispatch, userList, isDesktop]);
+
+  const fetchData = () => {
+    dispatch(fetchMoreRepos(selectedUserId, nextPage));
+  };
+
+  if (isFetching) {
+    return <RepoListSkeleton />;
+  }
+
   return (
-    <List
-      sx={{
-        height: "80vh",
-        width: "100%",
-        minWidth: 360,
-        bgcolor: "custom.200",
-        borderRadius: "6px",
-        overflow: "scroll",
-      }}
-    >
-      {mockRepos
-        .concat(mockRepos)
-        .map(
-          (
-            {
-              avatarSrc,
-              name,
-              fullName,
-              description,
-              htmlUrl,
-              stargazersCount,
-            },
-            index
-          ) => (
+    <StyledList id="scrollable-repo-list" data-testid="repo-list">
+      <InfiniteScroll
+        scrollableTarget="scrollable-repo-list"
+        dataLength={nextPage + 10}
+        next={fetchData}
+        hasMore={nextPage < lastPage}
+        loader={<LoadingIndicator />}
+      >
+        {repoList.map(
+          ({
+            owner: { avatar_url: avatarSrc },
+            name,
+            full_name: fullName,
+            description,
+            html_url: htmlUrl,
+            stargazers_count: stargazersCount,
+          }) => (
             <RepoListItem
-              key={index}
+              key={name}
               avatarSrc={avatarSrc}
               description={description}
               fullName={fullName}
@@ -88,8 +77,20 @@ const RepoList = () => {
             />
           )
         )}
-    </List>
+      </InfiniteScroll>
+    </StyledList>
   );
+};
+
+RepoList.propTypes = {
+  repos: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    repos: PropTypes.object,
+  }),
+  users: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    users: PropTypes.array,
+  }),
 };
 
 export default RepoList;
