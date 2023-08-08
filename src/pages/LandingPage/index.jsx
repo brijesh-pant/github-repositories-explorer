@@ -47,7 +47,12 @@ export default function LandingPage() {
                 <RepoList repos={repos} users={users} />
               </Grid>
             ) : (
-              <Dialog open={open} fullScreen onClose={handleClose}>
+              <Dialog
+                data-testid="repo-list-dialog"
+                open={open}
+                fullScreen
+                onClose={handleClose}
+              >
                 <DialogContent sx={{ padding: 0 }} dividers>
                   <RepoList repos={repos} users={users} />
                 </DialogContent>
