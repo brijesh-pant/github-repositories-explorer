@@ -32,6 +32,7 @@ const userSlice = createSlice({
     },
     getUsersFailed(state, action) {
       state.isFetching = false;
+      state.users = [];
       state.error = action.payload;
     },
   },

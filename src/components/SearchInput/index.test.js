@@ -1,26 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import SearchInput from ".";
 import ThemeProvider from "~/theme";
-import mediaQuery from "css-mediaquery";
-
-function createMatchMedia(width) {
-  return (query) => {
-    return {
-      matches: mediaQuery.match(query, { width }),
-      media: "",
-      addListener: () => {},
-      removeListener: () => {},
-      onchange: () => {},
-      addEventListener: () => {},
-      removeEventListener: () => {},
-      dispatchEvent: () => true,
-    };
-  };
-}
-
-function resizeScreenSize(width) {
-  window.matchMedia = createMatchMedia(width);
-}
+import { resizeScreenSize } from "~/utils";
 
 const Wrapper = () => (
   <ThemeProvider>

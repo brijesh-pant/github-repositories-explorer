@@ -60,6 +60,7 @@ const repoSlice = createSlice({
     getReposFailed(state, action) {
       state.isFetching = false;
       state.error = action.payload;
+      state.repos = {};
     },
   },
 });
