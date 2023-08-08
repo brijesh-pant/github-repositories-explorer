@@ -1,26 +1,19 @@
-import { useCallback } from "react";
 import PropTypes from "prop-types";
 import { Form, Field } from "react-final-form";
+
 import Stack from "@mui/material/Stack";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { StyledTextField, StyledSubmitButton } from "./styles";
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const required = (value) => (value ? undefined : "Required");
 
-export default function SearchInput() {
+export default function SearchInput({ helperText, onSubmit }) {
   const direction = useMediaQuery((theme) => theme.breakpoints.up("md"))
     ? "row"
     : "column";
   const testId =
     direction === "row" ? "search-input-desktop" : "search-input-mobile";
-
-  const onSubmit = useCallback(async (values) => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
-  }, []);
 
   return (
     <Form
@@ -31,9 +24,9 @@ export default function SearchInput() {
             data-testid={testId}
             spacing={2}
             direction={direction}
-            alignItems="center"
+            alignItems="baseline"
           >
-            <Field name="userName" validate={required}>
+            <Field name="username" validate={required}>
               {({ input, meta }) => (
                 <StyledTextField
                   {...input}
@@ -46,10 +39,12 @@ export default function SearchInput() {
                     shrink: false,
                     disableUnderline: true,
                   }}
+                  helperText={helperText}
                 />
               )}
             </Field>
             <StyledSubmitButton
+              data-testid={"search-button"}
               fullWidth
               variant="contained"
               type="submit"
@@ -65,5 +60,6 @@ export default function SearchInput() {
 }
 
 SearchInput.propTypes = {
+  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onSubmit: PropTypes.func,
 };

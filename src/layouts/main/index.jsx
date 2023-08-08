@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Header from "~/ui/Header";
-import logo from "~/assets/images/avatar/logo.png";
+import logo from "~/assets/images/logo.png";
 
 const StyledRoot = styled("div")({
   display: "flex",

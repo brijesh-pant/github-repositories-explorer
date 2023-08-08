@@ -1,14 +1,18 @@
+import { Provider } from "react-redux";
 import ThemeProvider from "~/theme";
 import MainLayout from "~/layouts/main";
 import LandingPage from "~/pages/LandingPage";
+import { store } from "~/features/store";
 
 function App() {
   return (
-    <ThemeProvider>
-      <MainLayout>
-        <LandingPage />
-      </MainLayout>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <MainLayout>
+          <LandingPage />
+        </MainLayout>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
