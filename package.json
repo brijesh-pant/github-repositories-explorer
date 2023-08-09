@@ -41,7 +41,8 @@
     "storybook": "storybook dev -p 6006",
     "predeploy": "npm run build-storybook",
     "deploy": "gh-pages -d storybook-static",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [
