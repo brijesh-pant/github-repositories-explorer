@@ -10,7 +10,7 @@ const repoListElement = "[data-testid='repo-list']";
 
 describe("github repositories explorer app", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit(Cypress.env("baseUrl"));
   });
 
   it("visit application", () => {
