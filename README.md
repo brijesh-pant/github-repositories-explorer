@@ -1,8 +1,8 @@
 # GitHub Repositories Explorer
 
-[![codecov](https://codecov.io/gh/brijesh-pant/github-repositories-explorer/branch/main/graph/badge.svg?token=HSWHTETH4U)](https://codecov.io/gh/brijesh-pant/github-repositories-explorer)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3f4229b4-75a9-482f-a675-7858873d3a01/deploy-status)](https://app.netlify.com/sites/capable-crostata-90a9f7/deploys)
 [![CI/CD](https://github.com/brijesh-pant/github-repositories-explorer/actions/workflows/node.js.yml/badge.svg)](https://github.com/brijesh-pant/github-repositories-explorer/actions/workflows/node.js.yml)
+[![codecov](https://codecov.io/gh/brijesh-pant/github-repositories-explorer/branch/main/graph/badge.svg?token=HSWHTETH4U)](https://codecov.io/gh/brijesh-pant/github-repositories-explorer)
 [![pages-build-deployment](https://github.com/brijesh-pant/github-repositories-explorer/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/brijesh-pant/github-repositories-explorer/actions/workflows/pages/pages-build-deployment)
 
 A React application which integrates with the [public GitHub REST API](https://docs.github.com/en/rest?apiVersion=2022-11-28) and allows user to search for upto 5 users with a username similar to the value entered in text input and then on click, display repositories (no limit on displayed repositories amount) for selected GitHub user
@@ -51,6 +51,7 @@ A React application which integrates with the [public GitHub REST API](https://d
 - [Material-UI](https://mui.com/material-ui/) components as an implementation of [Google's Material Design](https://material.io/design)
 - [Storybook](https://storybook.js.org/) for building UI components and pages in isolation.
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for writing unit and integration tests.
+- [Cypress](https://www.cypress.io/) for writing end to end tests.
 - [MSW](https://mswjs.io/) for mocking API requests in integration tests
 
 # Quick Start
