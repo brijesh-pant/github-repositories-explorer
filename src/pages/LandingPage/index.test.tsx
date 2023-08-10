@@ -7,7 +7,7 @@ import { store } from "~/features/store";
 import { resizeScreenSize } from "~/utils";
 import LandingPage from ".";
 
-let Wrapper;
+let Wrapper: any;
 
 describe("LandingPage Component", () => {
   // Enable API mocking before tests.

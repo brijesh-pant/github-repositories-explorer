@@ -1,17 +1,24 @@
 import PropTypes from "prop-types";
 import { Form, Field } from "react-final-form";
-
 import Stack from "@mui/material/Stack";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
+import useAppMediaQuery from "~/hooks/useAppMediaQuery";
 import { StyledTextField, StyledSubmitButton } from "./styles";
 
-const required = (value) => (value ? undefined : "Required");
+const required = (value: any) => (value ? undefined : "Required");
 
-export default function SearchInput({ helperText, onSubmit }) {
-  const direction = useMediaQuery((theme) => theme.breakpoints.up("md"))
-    ? "row"
-    : "column";
+interface IValues {
+  username: string;
+}
+
+interface ISearchInput {
+  helperText: string | boolean;
+  onSubmit: (values: IValues) => void;
+}
+
+export default function SearchInput({ helperText, onSubmit }: ISearchInput) {
+  const [isDesktop] = useAppMediaQuery();
+  const direction = isDesktop ? "row" : "column";
   const testId =
     direction === "row" ? "search-input-desktop" : "search-input-mobile";
 
@@ -27,7 +34,7 @@ export default function SearchInput({ helperText, onSubmit }) {
             alignItems="baseline"
           >
             <Field name="username" validate={required}>
-              {({ input, meta }) => (
+              {({ input }) => (
                 <StyledTextField
                   {...input}
                   id="username-input"
@@ -35,10 +42,6 @@ export default function SearchInput({ helperText, onSubmit }) {
                   fullWidth
                   autoFocus
                   placeholder="Enter username…"
-                  InputLabelProps={{
-                    shrink: false,
-                    disableUnderline: true,
-                  }}
                   helperText={helperText}
                 />
               )}

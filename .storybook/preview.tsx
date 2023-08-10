@@ -1,10 +1,10 @@
-import React from "react";
+import type { Preview } from "@storybook/react";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { Provider } from "react-redux";
 import ThemeProvider from "~/theme";
 import { store } from "~/features/store";
 
-const preview = {
+const preview: Preview = {
   decorators: [
     (Story) => (
       <Provider store={store}>

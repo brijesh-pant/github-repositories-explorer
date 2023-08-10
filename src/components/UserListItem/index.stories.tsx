@@ -48,16 +48,25 @@ const mockUsers = [
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Basic = {
-  render: () => <UserListItem avatarSrc={avatar1} name="tom" />,
+  render: () => (
+    <UserListItem
+      avatarSrc={avatar1}
+      key="gaearon"
+      name="gaearon"
+      onClick={() => {}}
+    />
+  ),
 };
 
 const UserList = () => (
   <List sx={{ width: "100%", minWidth: 360, bgcolor: "background.paper" }}>
     {mockUsers.map(({ avatarSrc, name }) => (
-      <>
-        <UserListItem avatarSrc={avatarSrc} name={name} />
-        <Divider variant="inset" component="li" />
-      </>
+      <UserListItem
+        key={name}
+        avatarSrc={avatarSrc}
+        name={name}
+        onClick={() => {}}
+      />
     ))}
   </List>
 );

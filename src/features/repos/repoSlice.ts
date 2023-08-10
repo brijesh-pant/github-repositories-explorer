@@ -1,26 +1,45 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getRepos } from "~/services/api";
+import { getRepos, IRepo } from "~/services/api";
+import { AppThunk } from "~/features/store";
 
-export const fetchRepos = (userId, page) => async (dispatch) => {
-  try {
-    dispatch(getReposFetching(userId));
-    const { items, lastPage, nextPage } = await getRepos(userId, page);
-    dispatch(getReposSuccess({ userId, items, lastPage, nextPage }));
-  } catch (err) {
-    dispatch(getReposFailed(err.message));
-  }
-};
+export const fetchRepos =
+  (userId: string, page?: number): AppThunk =>
+  async (dispatch) => {
+    try {
+      dispatch(getReposFetching(userId));
+      const { items, lastPage, nextPage } = await getRepos(userId, page);
+      dispatch(getReposSuccess({ userId, items, lastPage, nextPage }));
+    } catch (err: any) {
+      dispatch(getReposFailed(err.message));
+    }
+  };
 
-export const fetchMoreRepos = (userId, page) => async (dispatch) => {
-  try {
-    const { items, lastPage, nextPage } = await getRepos(userId, page);
-    dispatch(getMoreReposSuccess({ userId, items, lastPage, nextPage }));
-  } catch (err) {
-    dispatch(getReposFailed(err.message));
-  }
-};
-const initialState = {
-  selectedUserId: null,
+export const fetchMoreRepos =
+  (userId: string, page: number): AppThunk =>
+  async (dispatch) => {
+    try {
+      const { items, lastPage, nextPage } = await getRepos(userId, page);
+      dispatch(getMoreReposSuccess({ userId, items, lastPage, nextPage }));
+    } catch (err: any) {
+      dispatch(getReposFailed(err.message));
+    }
+  };
+
+export interface IRepos {
+  items: IRepo[];
+  lastPage: number;
+  nextPage: number;
+}
+
+export interface IReposInitialState {
+  selectedUserId: string;
+  repos: { [key: string]: IRepos };
+  isFetching: boolean;
+  error: string | null;
+}
+
+const initialState: IReposInitialState = {
+  selectedUserId: "",
   repos: {},
   isFetching: false,
   error: null,

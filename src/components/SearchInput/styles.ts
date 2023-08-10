@@ -7,8 +7,8 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     padding: theme.spacing(1, 2),
     borderRadius: theme.spacing(0.75),
     height: theme.spacing(4),
-    color: theme.palette.custom[100],
-    background: theme.palette.custom[200],
+    color: theme.palette.grey[100],
+    background: theme.palette.grey[200],
   },
   "& .MuiOutlinedInput-notchedOutline": {
     border: "none",

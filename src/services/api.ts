@@ -1,6 +1,20 @@
 import parseLink from "parse-link-header";
 
-export async function getUsers(username, perPage = 5) {
+export interface IUser {
+  avatar_url: string;
+  login: string;
+}
+
+export interface IRepo {
+  owner: { avatar_url: string };
+  name: string;
+  full_name: string;
+  description: string;
+  html_url: string;
+  stargazers_count: number;
+}
+
+export async function getUsers(username: string, perPage = 5) {
   const url = `https://api.github.com/search/users?q=${username}&per_page=${perPage}`;
   const response = await fetch(url);
 
@@ -13,7 +27,7 @@ export async function getUsers(username, perPage = 5) {
   return users;
 }
 
-export async function getRepos(username, page = 1, perPage = 10) {
+export async function getRepos(username: string, page = 1, perPage = 10) {
   const url = `https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`;
 
   const response = await fetch(url);
@@ -28,8 +42,10 @@ export async function getRepos(username, page = 1, perPage = 10) {
 
   const pageLinks = parseLink(response.headers.get("link"));
   if (pageLinks !== null) {
-    lastPage = parseInt(pageLinks.last.page, 10);
-    nextPage = parseInt(pageLinks.next.page, 10);
+    const lastP = (pageLinks.last && pageLinks.last.page) || "";
+    const nextP = (pageLinks.next && pageLinks.next.page) || "";
+    lastPage = parseInt(lastP, 10);
+    nextPage = parseInt(nextP, 10);
   }
 
   const items = await response.json();

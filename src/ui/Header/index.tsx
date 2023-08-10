@@ -2,16 +2,19 @@ import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import Link from "@mui/material/Link";
 
 import { HeaderSection, LogoSection } from "./styles";
+
+interface HeaderProps {
+  logoSrc: string;
+  appName: string;
+}
 
 /**
  * Display the app header
  */
-export default function Header({ logoSrc, appName }) {
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
-
+export default function Header({ logoSrc, appName }: HeaderProps) {
   return (
     <AppBar
       data-testid="header"
@@ -19,7 +22,7 @@ export default function Header({ logoSrc, appName }) {
       color="transparent"
       elevation={2}
     >
-      <HeaderSection isDesktop={isDesktop}>
+      <HeaderSection>
         <LogoSection>
           <Avatar alt={appName} src={logoSrc} />
           <Typography variant="h4" component="div">
@@ -28,6 +31,7 @@ export default function Header({ logoSrc, appName }) {
         </LogoSection>
 
         <Button
+          component={Link}
           target="_blank"
           href="https://brijesh-pant.github.io/github-repositories-explorer"
           underline="hover"

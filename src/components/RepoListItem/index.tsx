@@ -10,7 +10,20 @@ import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import Link from "@mui/material/Link";
 
-const Stargazers = ({ count }) => (
+interface IStargazers {
+  count: number;
+}
+
+interface IRepoListItem {
+  avatarSrc: string;
+  description: string;
+  fullName: string;
+  htmlUrl: string;
+  name: string;
+  stargazersCount: number;
+}
+
+const Stargazers = ({ count }: IStargazers) => (
   <Box
     sx={{
       display: "flex",
@@ -36,7 +49,7 @@ export default function RepoListItem({
   htmlUrl,
   name,
   stargazersCount,
-}) {
+}: IRepoListItem) {
   return (
     <Card component="li" data-testid="repo-list-item" sx={{ m: 2 }}>
       <CardHeader
