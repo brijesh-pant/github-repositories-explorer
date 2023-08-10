@@ -84,8 +84,8 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "!src/**/styles.js",
-      "!src/**/*.stories.js"
+      "!src/**/styles.ts",
+      "!src/**/*.stories.tsx"
     ],
     "moduleNameMapper": {
       "~/(.*)": "<rootDir>/src/$1"
