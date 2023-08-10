@@ -1,17 +1,25 @@
 import { useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import SearchInput from "~/components/SearchInput";
-import { fetchUsers } from "~/features/users/userSlice";
+import { fetchUsers, IUsersInitialState } from "~/features/users/userSlice";
+import { useAppDispatch } from "~/features/hooks";
 
-export default function UserSearchForm({ users }) {
-  const dispatch = useDispatch();
+interface IUserSearchForm {
+  users: IUsersInitialState;
+}
+
+interface IValues {
+  username: string;
+}
+
+export default function UserSearchForm({ users }: IUserSearchForm) {
+  const dispatch = useAppDispatch();
 
   const { usernameQuery, error } = users;
 
   const onSubmit = useCallback(
-    async (values) => {
+    async (values: IValues) => {
       dispatch(fetchUsers(values.username));
     },
     [dispatch]

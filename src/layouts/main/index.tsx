@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Header from "~/ui/Header";
 import logo from "~/assets/images/logo.png";
+import React from "react";
 
 const StyledRoot = styled("div")({
   display: "flex",
@@ -16,7 +17,11 @@ const Main = styled("div")(({ theme }) => ({
   padding: theme.spacing(3, 1),
 }));
 
-export default function MainLayout({ children }) {
+type MainLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <StyledRoot>
       <Header logoSrc={logo} appName="github-repositories-explorer" />

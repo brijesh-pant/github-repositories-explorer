@@ -1,24 +1,26 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Grid, Container } from "@mui/material";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import UserSearchForm from "~/modules/landing/UserSearchForm";
 import UserList from "~/modules/landing/UserList";
 import RepoList from "~/modules/landing/RepoList";
 import NoResultsFound from "~/components/NoResultsFound";
-import { useEffect, useState } from "react";
+import { RootState } from "~/features/store";
+import useAppMediaQuery from "~/hooks/useAppMediaQuery";
 
 export default function LandingPage() {
-  const users = useSelector((state) => state.users);
-  const repos = useSelector((state) => state.repos);
+  const users = useSelector((state: RootState) => state.users);
+  const repos = useSelector((state: RootState) => state.repos);
   const { usernameQuery, error } = users;
   const { selectedUserId } = repos;
 
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
+  const [isDesktop] = useAppMediaQuery();
 
   const [open, setOpen] = useState(false);
   useEffect(() => {

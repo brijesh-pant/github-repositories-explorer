@@ -91,6 +91,7 @@ const RepoList = () => (
         stargazersCount,
       }) => (
         <RepoListItem
+          key={name}
           avatarSrc={avatarSrc}
           description={description}
           fullName={fullName}

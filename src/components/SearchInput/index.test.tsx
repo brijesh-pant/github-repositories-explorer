@@ -5,7 +5,7 @@ import { resizeScreenSize } from "~/utils";
 
 const Wrapper = () => (
   <ThemeProvider>
-    <SearchInput onSubmit={() => {}} />
+    <SearchInput helperText="Showing results for dan…" onSubmit={() => {}} />
   </ThemeProvider>
 );
 

@@ -13,7 +13,7 @@ export const StyledImg = styled("img")(({ theme }) => ({
 }));
 
 /**
- * An empty state componenet telling users the system has no content to display.
+ * An empty state component telling users the system has no content to display.
  */
 export default function NoResultsFound() {
   return (

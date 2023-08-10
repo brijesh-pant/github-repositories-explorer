@@ -6,6 +6,13 @@ import Avatar from "@mui/material/Avatar";
 
 import { StyledListItemButton } from "./styles";
 
+interface IUserListItem {
+  avatarSrc: string;
+  name: string;
+  selectedUserId?: string;
+  onClick: (userId: string) => void;
+}
+
 /**
  * Display the searched github user content
  */
@@ -14,20 +21,24 @@ export default function UserListItem({
   name,
   selectedUserId,
   onClick,
-}) {
+}: IUserListItem) {
   const handleClick = () => {
     onClick(name);
   };
   const selected = selectedUserId === name;
 
+  const listItemButtonProps = {
+    key: name,
+    component: "li",
+    selected,
+    onClick: handleClick,
+  };
+
   return (
     <>
       <StyledListItemButton
-        key={name}
-        component="li"
         data-testid="user-list-item"
-        selected={selected}
-        onClick={handleClick}
+        {...listItemButtonProps}
       >
         <ListItemAvatar>
           <Avatar alt={name} src={avatarSrc} />

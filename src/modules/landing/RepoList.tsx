@@ -1,38 +1,47 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import List from "@mui/material/List";
 import { styled } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import RepoListItem from "~/components/RepoListItem";
 import LoadingIndicator from "~/ui/LoadingIndicator";
 import RepoListSkeleton from "~/ui/Skeleton/RepoListSkeleton";
-
-import { fetchRepos, fetchMoreRepos } from "~/features/repos/repoSlice";
+import { IUsersInitialState } from "~/features/users/userSlice";
+import {
+  fetchRepos,
+  fetchMoreRepos,
+  IReposInitialState,
+} from "~/features/repos/repoSlice";
+import { useAppDispatch } from "~/features/hooks";
+import useAppMediaQuery from "~/hooks/useAppMediaQuery";
 
 const StyledList = styled(List)(({ theme }) => ({
   height: "80vh",
   width: "100%",
   minWidth: theme.spacing(45),
-  backgroundColor: theme.palette.custom[200],
-  borderRadius: "6px",
+  backgroundColor: theme.palette.grey[200],
+  borderRadius: theme.spacing(0.75),
   overflow: "scroll",
   [theme.breakpoints.down("md")]: {
     height: "100%",
   },
 }));
 
-const RepoList = ({ repos, users }) => {
-  const dispatch = useDispatch();
+interface IRepoList {
+  repos: IReposInitialState;
+  users: IUsersInitialState;
+}
+
+const RepoList = ({ repos, users }: IRepoList) => {
+  const dispatch = useAppDispatch();
   const { users: userList } = users;
   const { isFetching, selectedUserId, repos: repoMap } = repos;
-  const repoList = _.get(repoMap, `[${selectedUserId}].items`, []);
-  const lastPage = _.get(repoMap, `[${selectedUserId}].lastPage`, 0);
-  const nextPage = _.get(repoMap, `[${selectedUserId}].nextPage`, 0);
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
+  const repoList = _.get(repoMap[selectedUserId], `items`, []);
+  const lastPage = _.get(repoMap[selectedUserId], `lastPage`, 0);
+  const nextPage = _.get(repoMap[selectedUserId], `nextPage`, 0);
+  const [isDesktop] = useAppMediaQuery();
 
   useEffect(() => {
     if (!_.isEmpty(userList) && isDesktop) {
