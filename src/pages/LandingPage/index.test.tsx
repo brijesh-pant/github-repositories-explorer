@@ -30,6 +30,7 @@ describe("LandingPage Component", () => {
   afterAll(() => server.close());
 
   it("fetches & receives users and repos after entering a username", async () => {
+    resizeScreenSize(1000);
     render(<Wrapper />);
 
     fireEvent.change(screen.getByPlaceholderText(/Enter username/i), {
@@ -39,9 +40,21 @@ describe("LandingPage Component", () => {
     await waitFor(() => {
       expect(screen.getByTestId("user-list")).toBeInTheDocument();
     });
+    // test repos list behaviour on user click
     fireEvent.click(screen.getByTestId(/user-list-item/i));
     await waitFor(() => {
       expect(screen.getByTestId("repo-list")).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(screen.getAllByTestId("repo-list-item")).toHaveLength(1);
+    });
+
+    // test repos list scroll behaviour
+    fireEvent.scroll(screen.getByTestId("repo-list"), {
+      target: { scrollY: 9000 },
+    });
+    await waitFor(() => {
+      expect(screen.getAllByTestId("repo-list-item")).toHaveLength(2);
     });
   });
 
